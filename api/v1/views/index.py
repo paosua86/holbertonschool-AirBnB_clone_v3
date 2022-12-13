@@ -10,4 +10,4 @@ from flask import jsonify
 # that returns a JSON: "status": "OK"
 @app_views.route("/status")
 def status():
-    return jsonify(status="ok")
+    return jsonify(status="OK")
