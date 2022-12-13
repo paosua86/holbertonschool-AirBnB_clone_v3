@@ -11,14 +11,18 @@ app = Flask(__name__)
 # register the blueprint app_views to your Flask instance app
 app.register_blueprint(app_views)
 
-# declare a method to handle @app.teardown_appcontext that calls storage.close()
+
+# declare a method to handle @app.teardown_appcontext
+# that calls storage.close()
 @app.teardown_appcontext
 def teardown(self):
     storage.close()
 
 if __name__ == "__main__":
-    """inside if __name__ == "__main__":, run your Flask server (variable app) with"""
+    """inside if __name__ == "__main__":, run your Flask
+    server (variable app) with"""
     if getenv('HBNB_MYSQL_HOST') and getenv('HBNB_API_PORT'):
-        app.run(host=getenv('HBNB_MYSQL_HOST'), port=getenv('HBNB_API_PORT'), threaded=True)
+        app.run(host=getenv('HBNB_MYSQL_HOST'), port=getenv('HBNB_API_PORT'),
+                threaded=True)
     else:
         app.run(host='0.0.0.0', port='5000', threaded=True)
