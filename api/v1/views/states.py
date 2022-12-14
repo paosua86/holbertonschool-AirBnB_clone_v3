@@ -33,10 +33,12 @@ def states_by_id(state_id):
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
 def delete_states(state_id):
     """deletes a state"""
-    if not storage.get(State, state_id):
-    # If the state_id is not linked to any State object, raise a 404 error
+    state = storage.get(State, state_id)
+    if not state:
+    # If the state_id is not linked to any State object,
+    # raise a 404 error
         abort(404)
-    State.delete()
+    state.delete()
     storage.save()
     # Returns an empty dictionary with the status code 200
     return jsonify({}), 200
@@ -44,7 +46,7 @@ def delete_states(state_id):
 
 # Creates a State: POST /api/v1/states
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
-def states_post(state_id):
+def states_post():
     """You must use request.get_json from Flask to
     transform the HTTP body request to a dictionary"""
     # If the HTTP body request is not valid JSON, raise a 400 error
