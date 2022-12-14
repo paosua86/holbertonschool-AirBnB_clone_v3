@@ -13,15 +13,14 @@ from models.state import State
 from models.user import User
 
 
-
 # create a route /status on the object app_views
 # that returns a JSON: "status": "OK"
 @app_views.route("/status")
 def status():
     return jsonify(status="OK")
-
 # Create an endpoint that retrieves the number
 # of each objects by type:
+
 @app_views.route("/api/v1/stats")
 def status_views():
     data = {
