@@ -5,6 +5,8 @@ from flask import Flask
 from models import storage
 from api.v1.views import app_views
 from os import getenv
+from flask import jsonify
+
 
 # create a variable app, instance of Flask
 app = Flask(__name__)
@@ -17,6 +19,12 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def teardown(self):
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return jsonify('pages/404.html')
+
 
 if __name__ == "__main__":
     """inside if __name__ == "__main__":, run your Flask
