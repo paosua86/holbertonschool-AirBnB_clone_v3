@@ -18,10 +18,10 @@ from models.user import User
 @app_views.route("/status")
 def status():
     return jsonify(status="OK")
+
+
 # Create an endpoint that retrieves the number
 # of each objects by type:
-
-
 @app_views.route("/stats")
 def status_count():
     data = {

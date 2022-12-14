@@ -9,12 +9,12 @@ from models.state import State
 
 # You must use to_dict() to retrieve an object into a valid JSON
 
-@app_views.route('/states', methods=['GET'])
-def states(state_id):
+@app_views.route("/states", methods=['GET'])
+def get_states():
     """retrieves states"""
     list = []
     for state in storage.all(State).values():
-        list.append(state.todict())
+        list.append(state.to_dict())
     return jsonify(list)
 
 
@@ -24,7 +24,7 @@ def states_by_id(state_id):
     """retrieves the state"""
     for state in storage.all(State).values():
         if state.id == state_id:
-            return jsonify(state.todict())
+            return jsonify(state.to_dict())
 # If the state_id is not linked to any State object, raise a 404 error
     abort(404)
 
