@@ -21,6 +21,7 @@ def status():
 # Create an endpoint that retrieves the number
 # of each objects by type:
 
+
 @app_views.route("/stats")
 def status_count():
     data = {
