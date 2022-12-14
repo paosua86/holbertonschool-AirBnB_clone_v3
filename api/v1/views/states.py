@@ -30,13 +30,14 @@ def states_by_id(state_id):
 
 
 # Deletes a State object:: DELETE /api/v1/states/<state_id>
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/states/<state_id>', strict_slashes=False,
+                 methods=['DELETE'])
 def delete_states(state_id):
     """deletes a state"""
     state = storage.get(State, state_id)
     if not state:
-    # If the state_id is not linked to any State object,
-    # raise a 404 error
+        # If the state_id is not linked to any State object,
+        # raise a 404 error
         abort(404)
     state.delete()
     storage.save()
@@ -79,7 +80,7 @@ def states_put(state_id):
         abort(400, "Not a JSON")
     # Update the State object with all key-value pairs of the dictionary
     for key, value in request.get_json().items():
-    # Ignore keys: id, created_at and updated_at
+        # Ignore keys: id, created_at and updated_at
         if key in ["id", "created_at", "updated_at"]:
             continue
         else:
