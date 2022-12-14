@@ -21,8 +21,8 @@ def status():
 # Create an endpoint that retrieves the number
 # of each objects by type:
 
-@app_views.route("/api/v1/stats")
-def status_views():
+@app_views.route("/stats")
+def status_count():
     data = {
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
@@ -31,3 +31,4 @@ def status_views():
         "states": storage.count(State),
         "users": storage.count(User),
     }
+    return data
