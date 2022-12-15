@@ -29,7 +29,7 @@ def get_cities(state_id):
 # Retrieves a City object. : GET /api/v1/cities/<city_id>
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET'])
 def cities_by_id(city_id):
-    """retrieves the state"""
+    """retrieves the city"""
     city = storage.get(City, city_id)
     if city:
         return jsonify(city.to_dict())
