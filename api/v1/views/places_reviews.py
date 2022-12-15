@@ -81,7 +81,7 @@ def review_post(place_id):
     if not valid_user:
         abort(404)
     # Returns the new Amenity with the status code 201
-    new_review = Place(**request.get_json())
+    new_review = Review(**request.get_json())
     setattr(new_review, 'place_id', place_id)
     new_review.save()
     return jsonify(new_review.to_dict()), 201
