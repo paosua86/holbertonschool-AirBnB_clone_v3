@@ -18,10 +18,12 @@ def get_places_by_city(city_id):
     if not city:
         abort(404)
     places = []
-    for places in city.places:
-        places.append(places.to_dict())
+    for place in city.places:
+        places.append(place.to_dict())
     return jsonify(places)
 
+@app_views.route("/states/<state_id>/cities", strict_slashes=False,
+                 methods=['GET'])
 
 
 # Retrieves a Place object. : GET /api/v1/places/<place_id>
