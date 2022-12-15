@@ -73,7 +73,6 @@ class FileStorage:
         """ Returns the object based on the class and its ID,
         or None if not found
         """
-
         for k, obj in self.all(cls).items():
             if obj.id == id:
                 return obj
