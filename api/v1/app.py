@@ -6,12 +6,15 @@ from models import storage
 from api.v1.views import app_views
 from os import getenv
 from flask import jsonify
+from flask_cors import CORS
 
 
 # create a variable app, instance of Flask
 app = Flask(__name__)
 # register the blueprint app_views to your Flask instance app
 app.register_blueprint(app_views)
+# Update api/v1/app.py to create a CORS instance allowing: /* for 0.0.0.0
+CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 
 # declare a method to handle @app.teardown_appcontext
