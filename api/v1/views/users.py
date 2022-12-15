@@ -33,7 +33,7 @@ def users_by_id(user_id):
 # Deletes a user object:: DELETE /api/v1/users/<user_id>
 @app_views.route('/users/<user_id>', strict_slashes=False,
                  methods=['DELETE'])
-def delete_amenities(user_id):
+def delete_user(user_id):
     """deletes a Amenity"""
     user = storage.get(User, user_id)
     if not user:
