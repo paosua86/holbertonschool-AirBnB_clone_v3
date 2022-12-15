@@ -62,7 +62,7 @@ def places_post(city_id):
     transform the HTTP body request to a dictionary"""
     city = storage.get(City, city_id)
     if not city:
-        abort(400)
+        abort(404)
     # If the HTTP body request is not valid JSON, raise a 400 error
     # with the message Not a JSON
     if not request.get_json():
@@ -91,7 +91,7 @@ def places_post(city_id):
                  methods=['PUT'])
 def places_put(place_id):
     """Updates a place object"""
-    place = storage.get(place, place_id)
+    place = storage.get(Place, place_id)
     # If the place_id is not linked to any place object, raise a 404 error
     if not place:
         abort(404)
