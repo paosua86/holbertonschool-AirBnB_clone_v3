@@ -26,42 +26,43 @@ def get_reviews_by_places(place_id):
     return jsonify(reviews)
 
 
-# Retrieves a Place object: GET /api/v1/places/<place_id>
-@app_views.route('/places/<place_id>', strict_slashes=False,
+# Retrieves a Review object. : GET
+# /api/v1/reviews/<review_id>
+@app_views.route('/reviews/<review_id>', strict_slashes=False,
                  methods=['GET'])
-def places_by_id(place_id):
-    """retrieves the places"""
-    place = storage.get(Place, place_id)
-    if place:
-        return jsonify(place.to_dict())
-# If the place_id is not linked to any Place object, raise a 404 error
+def reviews_by_id(review_id):
+    """retrieves the reviews"""
+    review = storage.get(Review, review_id)
+    if review:
+        return jsonify(review.to_dict())
+    # If the review_id is not linked to any Review object, raise a 404 error
     abort(404)
 
 
-# Deletes a Place object: DELETE /api/v1/places/<place_id>
-@app_views.route('/places/<place_id>', strict_slashes=False,
+# Deletes a Review object: DELETE /api/v1/reviews/<review_id>
+@app_views.route('/reviews/<review_id>', strict_slashes=False,
                  methods=['DELETE'])
-def delete_place(place_id):
+def delete_review(review_id):
     """deletes a Amenity"""
-    place = storage.get(Place, place_id)
-    if not place:
-        # If the place_id is not linked to any Place object
+    review = storage.get(Review, review_id)
+    if not review:
+        # If the review_id is not linked to any Review object,
         # raise a 404 error
         abort(404)
-    place.delete()
+    review.delete()
     storage.save()
     # Returns an empty dictionary with the status code 200
     return jsonify({}), 200
 
 
-# Creates a Place: POST /api/v1/cities/<city_id>/places
-@app_views.route('/cities/<city_id>/places', strict_slashes=False,
+# Creates a Review: POST /api/v1/places/<place_id>/reviews
+@app_views.route('/places/<place_id>/reviews', strict_slashes=False,
                  methods=['POST'])
-def places_post(city_id):
+def review_post(place_id):
     """You must use request.get_json from Flask to
     transform the HTTP body request to a dictionary"""
-    city = storage.get(City, city_id)
-    if not city:
+    place = storage.get(Place, place_id)
+    if not place:
         abort(404)
     # If the HTTP body request is not valid JSON, raise a 400 error
     # with the message Not a JSON
@@ -71,29 +72,29 @@ def places_post(city_id):
     # a 400 error with the message Missing name
     if 'user_id' not in request.get_json().keys():
         abort(400, "Missing user_id")
-    # If the dictionary doesn’t contain the key name, raise a
-    # 400 error with the message Missing name
-    if 'name' not in request.get_json().keys():
-        abort(400, "Missing name")
+    # If the dictionary doesn’t contain the key text, raise a
+    # 400 error with the message Missing text
+    if 'text' not in request.get_json().keys():
+        abort(400, "Missing text")
     # If the user_id is not linked to any User object, raise a 404 error
     valid_user = storage.get(User, request.get_json()['user_id'])
     if not valid_user:
         abort(404)
     # Returns the new Amenity with the status code 201
-    new_place = Place(**request.get_json())
-    setattr(new_place, 'city_id', city_id)
-    new_place.save()
-    return jsonify(new_place.to_dict()), 201
+    new_review = Place(**request.get_json())
+    setattr(new_review, 'place_id', place_id)
+    new_review.save()
+    return jsonify(new_review.to_dict()), 201
 
 
-# Updates a Place object: PUT /api/v1/places/<place_id>
-@app_views.route('/places/<place_id>', strict_slashes=False,
+# Updates a Review object: PUT /api/v1/reviews/<review_id>
+@app_views.route('/reviews/<review_id>', strict_slashes=False,
                  methods=['PUT'])
-def places_put(place_id):
-    """Updates a place object"""
-    place = storage.get(Place, place_id)
-    # If the place_id is not linked to any place object, raise a 404 error
-    if not place:
+def review_put(review_id):
+    """Updates a review object"""
+    review = storage.get(Review, review_id)
+    # If the review_id is not linked to any Review object, raise a 404 error
+    if not review:
         abort(404)
     # You must use request.get_json from Flask to transform the HTTP body
     # request to a dictionary
@@ -103,11 +104,11 @@ def places_put(place_id):
         abort(400, "Not a JSON")
     # Update the place object with all key-value pairs of the dictionary
     for key, value in request.get_json().items():
-        # Ignore keys: id, user_id, city_id, created_at and updated_at
-        if key in ["id", "user_id", "city_id", "created_at", "updated_at"]:
+        # Ignore keys: id, user_id, place_id, created_at and updated_at
+        if key in ["id", "user_id", "place_id", "created_at", "updated_at"]:
             continue
         else:
-            setattr(place, key, value)
+            setattr(review, key, value)
     # Returns the place object with the status code 200
     storage.save()
-    return jsonify(place.to_dict()), 200
+    return jsonify(review.to_dict()), 200
