@@ -7,6 +7,7 @@ from flask import Flask, jsonify, abort, request
 from models import storage
 from models.place import Place
 from models.city import City
+from models.user import User
 
 
 # Retrieves the list of all Place objects of a City: GET /api/v1/cities/<city_id>/places
@@ -74,6 +75,10 @@ def places_post(city_id):
     # 400 error with the message Missing name
     if 'name' not in request.get_json().keys():
         abort(400, "Missing name")
+    # If the user_id is not linked to any User object, raise a 404 error
+    valid_user = storage.get(User, request.get_json()['user_id'])
+    if not valid_user:
+        abort(404)
     # Returns the new Amenity with the status code 201
     new_place = Place(**request.get_json())
     setattr(new_place, 'city_id', city_id)
