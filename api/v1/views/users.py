@@ -25,7 +25,7 @@ def users_by_id(user_id):
     """retrieves the users"""
     user = storage.get(User, user_id)
     if user:
-        return jsonify(User.to_dict())
+        return jsonify(user.to_dict())
 # If the user_id is not linked to any user object, raise a 404 error
     abort(404)
 
@@ -57,8 +57,12 @@ def users_post():
         abort(400, "Not a JSON")
     # If the dictionary doesn't contain the key name, raise
     # a 400 error with the message Missing name
-    if 'name' not in request.get_json().keys():
-        abort(400, "Missing name")
+    if 'email' not in request.get_json().keys():
+        abort(400, "Missing email")
+    # If the dictionary doesn’t contain the key password, raise a
+    # 400 error with the message Missing password
+    if 'password' not in request.get_json().keys():
+        abort(400, "Missing password")
     # Returns the new Amenity with the status code 201
     new_user = User(**request.get_json())
     new_user.save()
