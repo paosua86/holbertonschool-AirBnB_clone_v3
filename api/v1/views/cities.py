@@ -10,8 +10,10 @@ from models.state import State
 
 
 # You must use to_dict() to retrieve an object into a valid JSON
-# Retrieves the list of all City objects of a State: GET /api/v1/states/<state_id>/cities
-@app_views.route("/states/<state_id>/cities", strict_slashes=False, methods=['GET'])
+# Retrieves the list of all City objects of a State: GET
+# /api/v1/states/<state_id>/cities
+@app_views.route("/states/<state_id>/cities", strict_slashes=False,
+                 methods=['GET'])
 def get_cities(state_id):
     """retrieves cities"""
     state = storage.get(State, state_id)
@@ -52,7 +54,8 @@ def delete_cities(city_id):
 
 
 # Creates a City: POST /api/v1/states/<state_id>/cities
-@app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['POST'])
+@app_views.route('/states/<state_id>/cities', strict_slashes=False,
+                 methods=['POST'])
 def cities_post(state_id):
     """You must use request.get_json from Flask to
     transform the HTTP body request to a dictionary"""
@@ -70,6 +73,7 @@ def cities_post(state_id):
         abort(400, "Missing name")
     # Returns the new City with the status code 201
     new_city = City(**request.get_json())
+    setattr(new_city, state_id)
     new_city.save()
     return jsonify(new_city.to_dict()), 201
 
