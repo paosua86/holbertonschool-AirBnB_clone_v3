@@ -73,7 +73,7 @@ def cities_post(state_id):
         abort(400, "Missing name")
     # Returns the new City with the status code 201
     new_city = City(**request.get_json())
-    setattr(new_city, state_id)
+    setattr(new_city, 'state_id', state_id)
     new_city.save()
     return jsonify(new_city.to_dict()), 201
 
