@@ -18,7 +18,7 @@ def get_places_by_city(city_id):
     if not city:
         abort(404)
     places = []
-    for place in city.places:
+    for places in city.places:
         places.append(places.to_dict())
     return jsonify(places)
 
