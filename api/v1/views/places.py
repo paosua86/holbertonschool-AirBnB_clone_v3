@@ -10,8 +10,10 @@ from models.city import City
 from models.user import User
 
 
-# Retrieves the list of all Place objects of a City: GET /api/v1/cities/<city_id>/places
-@app_views.route("/cities/<city_id>/places", strict_slashes=False, methods=['GET'])
+# Retrieves the list of all Place objects of a City: GET
+# /api/v1/cities/<city_id>/places
+@app_views.route("/cities/<city_id>/places", strict_slashes=False,
+                 methods=['GET'])
 def get_places_by_city(city_id):
     city = storage.get(City, city_id)
     # If the city_id is not linked to any City object
@@ -23,11 +25,8 @@ def get_places_by_city(city_id):
         places.append(place.to_dict())
     return jsonify(places)
 
-@app_views.route("/states/<state_id>/cities", strict_slashes=False,
-                 methods=['GET'])
 
-
-# Retrieves a Place object. : GET /api/v1/places/<place_id>
+# Retrieves a Place object: GET /api/v1/places/<place_id>
 @app_views.route('/places/<place_id>', strict_slashes=False,
                  methods=['GET'])
 def places_by_id(place_id):
@@ -56,7 +55,8 @@ def delete_place(place_id):
 
 
 # Creates a Place: POST /api/v1/cities/<city_id>/places
-@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['POST'])
+@app_views.route('/cities/<city_id>/places', strict_slashes=False,
+                 methods=['POST'])
 def places_post(city_id):
     """You must use request.get_json from Flask to
     transform the HTTP body request to a dictionary"""
