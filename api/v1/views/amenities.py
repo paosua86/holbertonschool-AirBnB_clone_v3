@@ -30,7 +30,7 @@ def amenitys_by_id(amenity_id):
     abort(404)
 
 
-# Deletes a Amenity object:: DELETE /api/v1/Amenitys/<Amenity_id>
+# Deletes a Amenity object:: DELETE /api/v1/amenities/<amenity_id>
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False,
                  methods=['DELETE'])
 def delete_amenities(amenity_id):
@@ -46,9 +46,9 @@ def delete_amenities(amenity_id):
     return jsonify({}), 200
 
 
-# Creates a Amenity: POST /api/v1/Amenitys
+# Creates a Amenity: POST /api/v1/amenities
 @app_views.route('/amenities', strict_slashes=False, methods=['POST'])
-def Amenitys_post():
+def amenities_post():
     """You must use request.get_json from Flask to
     transform the HTTP body request to a dictionary"""
     # If the HTTP body request is not valid JSON, raise a 400 error
@@ -65,10 +65,10 @@ def Amenitys_post():
     return jsonify(new_amenity.to_dict()), 201
 
 
-# Updates a Amenity object: PUT /api/v1/Amenitys/<Amenity_id>
+# Updates a Amenity object: PUT /api/v1/amenities/<Amenity_id>
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False,
                  methods=['PUT'])
-def Amenitys_put(amenity_id):
+def Amenities_put(amenity_id):
     """Updates a Amenity object"""
     amenity = storage.get(Amenity, amenity_id)
     # If the Amenity_id is not linked to any Amenity object, raise a 404 error
