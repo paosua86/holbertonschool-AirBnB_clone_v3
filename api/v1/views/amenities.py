@@ -19,7 +19,8 @@ def get_amenities():
 
 
 # Retrieves a Amenity object: GET /api/v1/Amenitys/<Amenity_id>
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
+                 methods=['GET'])
 def amenitys_by_id(amenity_id):
     """retrieves the Amenity"""
     amenity = storage.get(Amenity, amenity_id)
@@ -65,7 +66,8 @@ def Amenitys_post():
 
 
 # Updates a Amenity object: PUT /api/v1/Amenitys/<Amenity_id>
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
+                 methods=['PUT'])
 def Amenitys_put(amenity_id):
     """Updates a Amenity object"""
     amenity = storage.get(Amenity, amenity_id)
